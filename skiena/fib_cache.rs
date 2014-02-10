@@ -20,22 +20,11 @@ fn fib(n: u64, cache: &mut HashMap<u64, u64>) -> u64 {
     if n == 0 || n == 1 {
         n
     } else {
-        let minus1: u64;
-        let minus2: u64;
+        let foo1 = |x: &u64| fib(*x, cache);
+        let foo2 = |x: &u64| fib(*x, cache);
 
-        if cache.contains_key(&(n-1)) {
-            minus1 = *(cache.get(&(n-1)))
-        } else {
-            minus1 = fib(n-1, cache);
-            cache.insert(n-1, minus1);
-        }
-
-        if cache.contains_key(&(n-2)) {
-            minus2 = *(cache.get(&(n-2)))
-        } else {
-            minus2 = fib(n-2, cache);
-            cache.insert(n-2, minus2);
-        }
+        let minus1: u64 = *(cache.find_or_insert_with(n-1, foo1));
+        let minus2: u64 = *(cache.find_or_insert_with(n-2, foo2));
 
         minus1 + minus2
     }
