@@ -55,4 +55,22 @@ def DP1(v, graph, targets):
             v = newv
 
 
+def DP2(v, graph, sources, candidates):
+    keep_going = None
+    while keep_going != False and len(candidates) > 0:
+        print("v = "+str(v))
+        j = candidates.pop()
+
+        for i in sources[j]:
+            tmp = graph[(i, j)] + v[j]
+            
+            if tmp < v[i]:
+                v[i] = tmp
+
+                if i not in candidates:
+                    candidates.insert(0, i)
+
+
 DP1(v, graph, targets)
+print('-------')
+DP2(v, graph, sources, [4])
