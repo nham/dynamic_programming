@@ -12,11 +12,13 @@ fn main() {
 
     let mut fibcache = HashMap::<u64, u64>::new();
 
-    println!("{}", fib(n.unwrap(), &mut fibcache));
+    //println!("{}", fib(n.unwrap(), &mut fibcache));
+    println!("{}", non_cache_fib(n.unwrap()));
 
 }
 
 fn fib(n: u64, cache: &mut HashMap<u64, u64>) -> u64 {
+    println!("we're manually computing {}", n); 
     if n == 0 || n == 1 {
         n
     } else {
@@ -27,6 +29,17 @@ fn fib(n: u64, cache: &mut HashMap<u64, u64>) -> u64 {
         let minus2: u64 = *(cache.find_or_insert_with(n-2, foo2));
 
         minus1 + minus2
+    }
+
+}
+
+
+fn non_cache_fib(n: u64) -> u64 {
+    println!("we're manually computing {}", n); 
+    if n == 0 || n == 1 {
+        n
+    } else {
+        non_cache_fib(n-1) + non_cache_fib(n-2)
     }
 
 }
