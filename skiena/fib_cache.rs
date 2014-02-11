@@ -12,8 +12,10 @@ fn main() {
 
     let mut fibcache = HashMap::<u64, u64>::new();
 
-    //println!("{}", fib(n.unwrap(), &mut fibcache));
-    println!("{}", non_cache_fib(n.unwrap()));
+    println!("{}", fib(n.unwrap(), &mut fibcache));
+    //println!("{}", non_cache_fib(n.unwrap()));
+    println!("{}", dpfib(n.unwrap()));
+    println!("the ultimate: {}", dpfib_ultra(n.unwrap()));
 
 }
 
@@ -44,3 +46,27 @@ fn non_cache_fib(n: u64) -> u64 {
 
 }
 
+
+fn dpfib(n: u64) -> u64 {
+    let mut cache: ~[u64] = ~[0u64, 1u64];
+
+    for i in range(2, n+1) {
+        cache.push(cache[i-1] + cache[i-2]);
+    }
+
+    cache[n]
+}
+
+fn dpfib_ultra(n: u64) -> u64 {
+    let mut prev = 0u64;
+    let mut this = 1u64;
+
+    let mut tmp;
+    for i in range(2, n+1) {
+        tmp = this;
+        this = this + prev;
+        prev = tmp;
+    }
+
+    this
+}
